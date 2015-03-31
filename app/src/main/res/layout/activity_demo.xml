@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#0099cc"
+    tools:context="com.knowyour.numbers.Demo">
+
+    <Button
+        android:id="@+id/number_button"
+        android:text="Kids mode (Numbers)"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/first_run_button"
+        android:text="First Run Mode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/number_button"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/reminder_return_button"
+        android:text="Reminder Response"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_run_button"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
