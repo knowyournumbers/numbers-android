@@ -20,6 +20,13 @@ public class Demo extends Activity {
                 v.getContext().startActivity(new Intent(v.getContext(), NumberView.class));
             }
         });
+
+        findViewById(R.id.first_run_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                v.getContext().startActivity(new Intent(v.getContext(), FirstRun.class));
+            }
+        });
     }
 
 }
