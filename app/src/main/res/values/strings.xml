@@ -9,4 +9,9 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_numbers">Learn Your Number</string>
     <string name="title_first_run">Getting Started</string>
+    <string name="submit_confirm_message">You are all setup!</string>
+    <string name="submit_confirm_button">Done</string>
+    <string name="next">Next</string>
+    <string name="finish">Finished!</string>
+    <string name="prev">Previous</string>
 </resources>

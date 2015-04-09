@@ -1,67 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="#0099cc"
-    tools:context="com.knowyour.numbers.FirstRun">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/first_run_welcome_text"
-        android:text="Welcome to Know Your Numbers."
-        android:layout_width="fill_parent"
+    <com.tech.freak.wizardpager.ui.StepPagerStrip
+        android:id="@+id/strip"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:textAlignment="center"
-        android:textSize="@dimen/abc_text_size_large_material"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="start"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/list_item_padding_left"
+        android:paddingRight="@dimen/list_item_padding_right"
+        android:paddingTop="16dp" />
 
-    <TextView
-        android:id="@+id/first_run_subtext"
-        android:text="Save, Empowered Kids."
-        android:textSize="@dimen/abc_text_size_medium_material"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/first_run_welcome_text"
-        android:layout_centerHorizontal="true"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/is_this_your_number"
-        android:text="First things first is this your number?."
-        android:textSize="@dimen/abc_text_size_large_material"
-        android:layout_marginTop="60dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/first_run_subtext"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:id="@+id/first_run_phone_number"
-        android:text="(321) 555-1212"
-        android:textSize="@dimen/abc_text_size_medium_material"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/is_this_your_number"/>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        style="@style/ButtonBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/first_run_phone_number">
+        android:orientation="horizontal" >
 
         <Button
-            style="@android:style/Widget.Holo.Button.Small"
-            android:text="Yes"
-            android:id="@android:id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/prev_button"
+            style="@style/ButtonBarButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selectable_item_background"
+            android:text="@string/prev" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider" />
+
         <Button
-            style="@android:style/Widget.Holo.Button.Small"
-            android:text="No"
-            android:id="@android:id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:id="@+id/next_button"
+            style="@style/ButtonBarButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selectable_item_background"
+            android:text="@string/next" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-
-
-</RelativeLayout>
+</LinearLayout>

@@ -45,7 +45,6 @@ public class Demo extends Activity {
                         .setContentText("Its be N days lets keep that number on the front of your child's mind!")
                         .addAction(android.R.drawable.ic_menu_delete, "Change Time", changeNotifications)
                         .addAction(android.R.drawable.ic_menu_zoom, "Start", changeNotifications)
-                        .setVisibility(Notification.VISIBILITY_PUBLIC)
                         .build();
 
                 final NotificationManager mNotificationManager =

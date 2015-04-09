@@ -3,6 +3,8 @@
     package="com.knowyour.numbers" >
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -25,9 +27,7 @@
             android:label="@string/title_numbers"
             android:theme="@style/FullscreenTheme" >
         </activity>
-        <activity android:name=".FirstRun"
-            android:label="@string/title_first_run"
-            android:theme="@style/FullscreenTheme" >
+        <activity android:name=".FirstRun" >
         </activity>
     </application>
 
