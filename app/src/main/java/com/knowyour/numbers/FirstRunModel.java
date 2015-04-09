@@ -26,18 +26,18 @@ public class FirstRunModel extends AbstractWizardModel {
             new BranchPage(this, "Select Phone Number")
                 .addBranch("Existing Number",
                     new SingleFixedChoicePage(this, "Existing Number")
-                        .setChoices("Use number (321)-555-1212"))
+                        .setChoices("Use number (321)-555-1212")) // Need to update this to pull from the OS
                 .addBranch("Manual Entry",
                     new NumberPage(this, "Type the Phone Number to teach"))
-                    .setRequired(true),
+                    .setRequired(true), // Clean up this UX a little :/
             new ImagePage(this, "Pick a photo for your child to see")
-                .setRequired(true),
+                .setRequired(false), // Busted
             new MultipleFixedChoicePage(this, "What day of the weeks should we notify you?")
                 .setChoices("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-                .setRequired(true),
+                .setRequired(true), // This can work for the time being
             new TextPage(this, "What time should you be notified?")
                     .setValue("9:00 AM")
-                    .setRequired(true)
+                    .setRequired(true) // Change to a time selector interface
         );
 
 
