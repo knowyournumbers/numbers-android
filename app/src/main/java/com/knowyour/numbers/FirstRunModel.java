@@ -35,8 +35,7 @@ public class FirstRunModel extends AbstractWizardModel {
             new MultipleFixedChoicePage(this, "What day of the weeks should we notify you?")
                 .setChoices("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
                 .setRequired(true), // This can work for the time being
-            new TextPage(this, "What time should you be notified?")
-                    .setValue("9:00 AM")
+            new TimeSelectionPage(this, "What time should you be notified?")
                     .setRequired(true) // Change to a time selector interface
         );
 
