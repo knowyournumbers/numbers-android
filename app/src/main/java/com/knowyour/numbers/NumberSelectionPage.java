@@ -9,15 +9,14 @@ import com.tech.freak.wizardpager.model.ReviewItem;
 
 import java.util.ArrayList;
 
-public class TimeSelectionPage extends Page {
-
-    protected TimeSelectionPage(ModelCallbacks callbacks, String title) {
+public class NumberSelectionPage  extends Page {
+    protected NumberSelectionPage(final ModelCallbacks callbacks, final String title) {
         super(callbacks, title);
     }
 
     @Override
     public Fragment createFragment() {
-        return TimeSelectionFragment.create(getKey());
+        return NumberSelectionFragment.create(getKey());
     }
 
     @Override
@@ -28,10 +27,10 @@ public class TimeSelectionPage extends Page {
 
     @Override
     public boolean isCompleted() {
-        return !TextUtils.isEmpty(mData.getString(SIMPLE_DATA_KEY));
+        return !TextUtils.isEmpty(mData.getString(SIMPLE_DATA_KEY)) && mData.getString(SIMPLE_DATA_KEY).length() == 10;
     }
 
-    public TimeSelectionPage setValue(final String value) {
+    public NumberSelectionPage setValue(final String value) {
         mData.putString(SIMPLE_DATA_KEY, value);
         return this;
     }

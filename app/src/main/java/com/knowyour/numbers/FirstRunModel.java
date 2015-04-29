@@ -23,12 +23,7 @@ public class FirstRunModel extends AbstractWizardModel {
     @Override
     protected PageList onNewRootPageList() {
         final PageList mine = new PageList(
-            new BranchPage(this, "Select Phone Number")
-                .addBranch("Existing Number",
-                    new SingleFixedChoicePage(this, "Existing Number")
-                        .setChoices("Use number (321)-555-1212")) // Need to update this to pull from the OS
-                .addBranch("Manual Entry",
-                    new NumberPage(this, "Type the Phone Number to teach")), // Clean up this UX a little :/
+            new NumberSelectionPage(this, "Select Phone Number"),
             new ImagePage(this, "Pick a photo for your child to see")
                 .setRequired(false), // Busted
             new MultipleFixedChoicePage(this, "What day of the weeks should we notify you?")

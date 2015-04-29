@@ -1,6 +1,5 @@
 package com.knowyour.numbers;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,9 +49,10 @@ public class TimeSelectionFragment extends Fragment {
         final String dataAsString = mPage.getData().getString(Page.SIMPLE_DATA_KEY);
         final Integer[] timeValue = extractTimeString(dataAsString);
 
-        mTimePicker.setCurrentHour(timeValue[0]);
-        mTimePicker.setCurrentMinute(timeValue[1]);
-
+        if (mTimePicker != null && timeValue != null) {
+            mTimePicker.setCurrentHour(timeValue[0]);
+            mTimePicker.setCurrentMinute(timeValue[1]);
+        }
         return rootView;
     }
 
