@@ -1,5 +1,6 @@
 package com.knowyour.numbers;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,61 +13,46 @@ import android.widget.TimePicker;
 import com.tech.freak.wizardpager.model.Page;
 import com.tech.freak.wizardpager.ui.PageFragmentCallbacks;
 
-/**
- * Created by pnied on 4/28/2015.
- */
 public class TimeSelectionFragment extends Fragment {
     protected static final String ARG_KEY = "key";
-    private String mKey;
     private Page mPage;
     private PageFragmentCallbacks mCallbacks;
     private TimePicker mTimePicker;
 
 
     public static TimeSelectionFragment create(String key) {
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
 
-        TimeSelectionFragment f = new TimeSelectionFragment();
+        final TimeSelectionFragment f = new TimeSelectionFragment();
         f.setArguments(args);
         return f;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        mKey = args.getString(ARG_KEY);
-        mPage = mCallbacks.onGetPage(mKey);
+        final Bundle args = getArguments();
+        mPage = mCallbacks.onGetPage(args.getString(ARG_KEY));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.time_selection,
+    public View onCreateView(final LayoutInflater inflater,
+                             final ViewGroup container,
+                             final Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.time_selection,
                 container, false);
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage
                 .getTitle());
 
         mTimePicker = (TimePicker) rootView.findViewById(R.id.timePicker);
-
-        String[] time = new String[0];
         final String dataAsString = mPage.getData().getString(Page.SIMPLE_DATA_KEY);
-        if (dataAsString != null ) {
-            time = dataAsString.split(":");
-        }
+        final Integer[] timeValue = extractTimeString(dataAsString);
 
-        if (time.length == 2) {
-            try {
-                int hour = Integer.parseInt(time[0]);
-                mTimePicker.setCurrentHour(hour);
-                int minute = Integer.parseInt(time[1]);
-                mTimePicker.setCurrentMinute(minute);
-            } catch (final NumberFormatException nfe) {
-                // Do nothing
-            }
-        }
+        mTimePicker.setCurrentHour(timeValue[0]);
+        mTimePicker.setCurrentMinute(timeValue[1]);
+
         return rootView;
     }
 
@@ -91,12 +77,42 @@ public class TimeSelectionFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        final String currentTime = createTimeString(mTimePicker.getCurrentHour(), mTimePicker.getCurrentMinute());
+        mPage.getData().putString(Page.SIMPLE_DATA_KEY, currentTime);
+        mPage.notifyDataChanged();
+
         mTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(final TimePicker view, final int hourOfDay, final int minute) {
-                mPage.getData().putString(Page.SIMPLE_DATA_KEY, hourOfDay + ":" + minute);
+                final String formattedTime = createTimeString(hourOfDay, minute);
+                mPage.getData().putString(Page.SIMPLE_DATA_KEY, formattedTime);
                 mPage.notifyDataChanged();
             }
         });
      }
+
+    public static String createTimeString(int hourOfDay, int minute) {
+        return String.format("%d:%02d %s", hourOfDay % 12, minute, hourOfDay >= 12 ? "PM" : "AM");
+    }
+
+    public static Integer[] extractTimeString(String dataAsString) {
+        String[] time = new String[0];
+        if (dataAsString != null ) {
+            time = dataAsString.split(": ");
+        }
+
+        final Integer[] timeValue = new Integer[2];
+
+        if (time.length == 3) {
+            try {
+                boolean pm = time[2].equalsIgnoreCase("pm");
+                timeValue[0] = Integer.parseInt(time[0]) + (pm ? 12 : 0);
+                timeValue[1] = Integer.parseInt(time[1]);
+            } catch (final NumberFormatException nfe) {
+                // Do nothing
+            }
+        }
+        return timeValue;
+    }
 }
