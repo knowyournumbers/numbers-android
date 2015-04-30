@@ -75,6 +75,7 @@ public class NumberSelectionFragment extends TextFragment {
         final TelephonyManager telephonyManager = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         if (telephonyManager.getLine1Number() != null) {
             final String phoneNumber = createPhoneNumberString(telephonyManager.getLine1Number());
+            mEditTextInput.setText(phoneNumber);
             mPage.getData().putString(Page.SIMPLE_DATA_KEY, phoneNumber);
             mPage.notifyDataChanged();
         }
