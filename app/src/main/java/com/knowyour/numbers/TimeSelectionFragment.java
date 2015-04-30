@@ -97,18 +97,19 @@ public class TimeSelectionFragment extends Fragment {
     }
 
     public static Integer[] extractTimeString(String dataAsString) {
-        String[] time = new String[0];
-        if (dataAsString != null ) {
-            time = dataAsString.split(": ");
+        if (dataAsString == null) {
+            return null;
         }
 
+        final String[] time = dataAsString.split(":");
         final Integer[] timeValue = new Integer[2];
 
-        if (time.length == 3) {
+        if (time.length == 2) {
             try {
-                boolean pm = time[2].equalsIgnoreCase("pm");
+                final String[] minuteAndM = time[1].split(" ");
+                boolean pm = minuteAndM[1].equalsIgnoreCase("pm");
                 timeValue[0] = Integer.parseInt(time[0]) + (pm ? 12 : 0);
-                timeValue[1] = Integer.parseInt(time[1]);
+                timeValue[1] = Integer.parseInt(minuteAndM[0]);
             } catch (final NumberFormatException nfe) {
                 // Do nothing
             }
