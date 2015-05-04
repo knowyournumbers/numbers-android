@@ -57,7 +57,8 @@ public class Demo extends Activity {
         findViewById(R.id.reminder_answered).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-
+                final Intent intent = new Intent(Demo.this, ChangeActivity.class);
+                startActivity(intent);
             }
         });
 
