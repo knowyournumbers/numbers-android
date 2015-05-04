@@ -29,11 +29,11 @@ public class Demo extends Activity {
         findViewById(R.id.first_run_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                v.getContext().startActivity(new Intent(v.getContext(), FirstRun.class));
+                v.getContext().startActivity(new Intent(v.getContext(), BasicWizardRunner.class));
             }
         });
 
-        findViewById(R.id.reminder_return_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.trigger_reminder_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 final PendingIntent changeNotifications = TaskStackBuilder.create(Demo.this)
@@ -42,6 +42,7 @@ public class Demo extends Activity {
                 final Notification notification = new Notification.Builder(Demo.this)
                         .setSmallIcon(R.drawable.numbers_logo)
                         .setContentTitle("Time to refresh that number knowledge")
+                        // TODO: N should be from prefs
                         .setContentText("Its be N days lets keep that number on the front of your child's mind!")
                         .addAction(android.R.drawable.ic_menu_delete, "Change Time", changeNotifications)
                         .addAction(android.R.drawable.ic_menu_zoom, "Start", changeNotifications)
@@ -52,5 +53,13 @@ public class Demo extends Activity {
                 mNotificationManager.notify(0, notification);
             }
         });
+
+        findViewById(R.id.reminder_answered).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+            }
+        });
+
     }
 }

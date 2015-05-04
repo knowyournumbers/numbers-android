@@ -21,11 +21,19 @@
         android:layout_centerHorizontal="true"/>
 
     <Button
-        android:id="@+id/reminder_return_button"
-        android:text="Reminder Response"
+        android:id="@+id/trigger_reminder_button"
+        android:text="Trigger Reminder Notification"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/first_run_button"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/reminder_answered"
+        android:text="Reminder Answered"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trigger_reminder_button"
         android:layout_centerHorizontal="true"/>
 
 

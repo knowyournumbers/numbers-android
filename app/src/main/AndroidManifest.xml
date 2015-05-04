@@ -27,8 +27,8 @@
             android:label="@string/title_numbers"
             android:theme="@style/FullscreenTheme" >
         </activity>
-        <activity android:name=".FirstRun" >
-        </activity>
+        <activity android:name=".FirstRun" />
+        <activity android:name=".ChangeActivity" />
     </application>
 
 </manifest>
