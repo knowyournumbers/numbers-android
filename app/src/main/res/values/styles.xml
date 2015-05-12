@@ -24,4 +24,16 @@
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
     <style name="ButtonBarButton" />
 
+    <style name="FirstNumber">
+        <item name="android:textColor">#79C5EB</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="MiddleNumber">
+        <item name="android:textColor">#7FCBC3</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="LastNumber">
+        <item name="android:textColor">#ACD8A1</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 </resources>
