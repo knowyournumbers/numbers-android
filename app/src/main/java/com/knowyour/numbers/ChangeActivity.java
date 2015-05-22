@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -49,6 +50,13 @@ public class ChangeActivity extends FragmentActivity {
                 mPager.setCurrentItem(mPager.getCurrentItem() - 1);
             }
         });
+
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+            }
+        });
         updateBottomBar();
 
     }
@@ -80,16 +88,18 @@ public class ChangeActivity extends FragmentActivity {
         private Fragment mPrimaryItem;
         private List<Fragment> pages = new LinkedList<>();
 
-        public  MyPagerAdapter(final FragmentManager fm) {
+        public MyPagerAdapter(final FragmentManager fm) {
             super(fm);
         }
 
         public void AddPage(final Fragment fragment) {
             pages.add(fragment);
+            notifyDataSetChanged();
         }
 
         public void RemovePage(final Fragment fragment) {
             pages.remove(fragment);
+            notifyDataSetChanged();
         }
 
         @Override
@@ -121,6 +131,8 @@ public class ChangeActivity extends FragmentActivity {
     }
 
     public static class StartingFragment extends Fragment {
+
+        private static int number = 1;
         public static Fragment newInstance() {
             final StartingFragment fragment = new StartingFragment();
             return fragment;
@@ -132,20 +144,35 @@ public class ChangeActivity extends FragmentActivity {
                                  @Nullable final Bundle savedInstanceState) {
             final View view = inflater.inflate(R.layout.change_start_fragment, container, false);
 
+            TextView textView = (TextView)view.findViewById(R.id.textView);
+            textView.setText(textView.getText() + " " + number++);
+
             final RadioButton button1 = (RadioButton)view.findViewById(R.id.radioButton);
             button1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    ChangeActivity activity = ((ChangeActivity)getActivity());
-                    if (isChecked) {
-                        activity.mPagerAdapter.AddPage(StartingFragment.newInstance());
-                    } else {
-                        activity.mPagerAdapter.AddPage(StartingFragment.newInstance());
-                    }
+                ChangeActivity activity = ((ChangeActivity)getActivity());
+                if (isChecked) {
+                    activity.mPagerAdapter.AddPage(StartingFragment.newInstance());
+                } else {
+                    activity.mPagerAdapter.RemovePage(StartingFragment.newInstance());
+                }
                 }
             });
 
             final RadioButton button2 = (RadioButton)view.findViewById(R.id.radioButton2);
+            button2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                    ChangeActivity activity = ((ChangeActivity) getActivity());
+                    if (isChecked) {
+                        activity.mPagerAdapter.AddPage(StartingFragment.newInstance());
+                    } else {
+                        activity.mPagerAdapter.RemovePage(StartingFragment.newInstance());
+                    }
+                }
+            });
+
             return view;
         }
     }
