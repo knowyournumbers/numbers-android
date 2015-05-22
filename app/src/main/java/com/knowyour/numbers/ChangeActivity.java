@@ -1,13 +1,12 @@
 package com.knowyour.numbers;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.knowyour.numbers.change.ChangeSchedule;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ChangeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_activity);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPagerAdapter.AddPage(StartingFragment.newInstance());
+        mPagerAdapter.AddPage(IsNumberKnownFragment.newInstance());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
         mNextButton = (Button) findViewById(R.id.next_button);
@@ -54,7 +55,9 @@ public class ChangeActivity extends FragmentActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+                if (mPager.getCurrentItem() + 1 <= mPager.getChildCount()){
+                    mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+                }
             }
         });
         updateBottomBar();
@@ -93,8 +96,10 @@ public class ChangeActivity extends FragmentActivity {
         }
 
         public void AddPage(final Fragment fragment) {
-            pages.add(fragment);
-            notifyDataSetChanged();
+            if (!pages.contains(fragment)) {
+                pages.add(fragment);
+                notifyDataSetChanged();
+            }
         }
 
         public void RemovePage(final Fragment fragment) {
@@ -130,11 +135,11 @@ public class ChangeActivity extends FragmentActivity {
         }
     }
 
-    public static class StartingFragment extends Fragment {
+    public static class IsNumberKnownFragment extends Fragment {
 
         private static int number = 1;
         public static Fragment newInstance() {
-            final StartingFragment fragment = new StartingFragment();
+            final IsNumberKnownFragment fragment = new IsNumberKnownFragment();
             return fragment;
         }
 
@@ -142,33 +147,35 @@ public class ChangeActivity extends FragmentActivity {
         public View onCreateView(final LayoutInflater inflater,
                                  @Nullable final ViewGroup container,
                                  @Nullable final Bundle savedInstanceState) {
-            final View view = inflater.inflate(R.layout.change_start_fragment, container, false);
+            final View view = inflater.inflate(R.layout.is_number_known_fragment, container, false);
 
             TextView textView = (TextView)view.findViewById(R.id.textView);
             textView.setText(textView.getText() + " " + number++);
 
-            final RadioButton button1 = (RadioButton)view.findViewById(R.id.radioButton);
-            button1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            final RadioButton knownButton = (RadioButton)view.findViewById(R.id.radioButton);
+            knownButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ChangeActivity activity = ((ChangeActivity)getActivity());
-                if (isChecked) {
-                    activity.mPagerAdapter.AddPage(StartingFragment.newInstance());
-                } else {
-                    activity.mPagerAdapter.RemovePage(StartingFragment.newInstance());
-                }
+                    ChangeActivity activity = ((ChangeActivity) getActivity());
+                    if (isChecked) {
+                        activity.mPagerAdapter.AddPage(NumberKnownPreShare.newInstance());
+                        activity.mPagerAdapter.AddPage(ShareKnownNumber.newInstance());
+                    } else {
+                        activity.mPagerAdapter.RemovePage(ShareKnownNumber.newInstance());
+                        activity.mPagerAdapter.RemovePage(NumberKnownPreShare.newInstance());
+                    }
                 }
             });
 
-            final RadioButton button2 = (RadioButton)view.findViewById(R.id.radioButton2);
-            button2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            final RadioButton notKnownButton = (RadioButton)view.findViewById(R.id.radioButton2);
+            notKnownButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
                     ChangeActivity activity = ((ChangeActivity) getActivity());
                     if (isChecked) {
-                        activity.mPagerAdapter.AddPage(StartingFragment.newInstance());
+                        activity.mPagerAdapter.AddPage(ChangeSchedule.newInstance());
                     } else {
-                        activity.mPagerAdapter.RemovePage(StartingFragment.newInstance());
+                        activity.mPagerAdapter.RemovePage(ChangeSchedule.newInstance());
                     }
                 }
             });
@@ -176,4 +183,59 @@ public class ChangeActivity extends FragmentActivity {
             return view;
         }
     }
+
+    public static class NumberKnownPreShare extends Fragment {
+
+        public static Fragment newInstance() {
+            final NumberKnownPreShare fragment = new NumberKnownPreShare();
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(final LayoutInflater inflater,
+                                 @Nullable final ViewGroup container,
+                                 @Nullable final Bundle savedInstanceState) {
+            final View view = inflater.inflate(R.layout.number_known_pre_share, container, false);
+//            final ChangeActivity activity = ((ChangeActivity) getActivity());
+//            activity.mPagerAdapter.AddPage(ShareKnownNumber.newInstance());
+            return view;
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+    }
+
+    public static class ShareKnownNumber extends Fragment {
+
+        public static Fragment newInstance() {
+            final ShareKnownNumber fragment = new ShareKnownNumber();
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(final LayoutInflater inflater,
+                                 @Nullable final ViewGroup container,
+                                 @Nullable final Bundle savedInstanceState) {
+            final View view = inflater.inflate(R.layout.share_known_number, container, false);
+            final Button shareWithFriends = (Button)view.findViewById(R.id.button);
+            shareWithFriends.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    final Intent i = new Intent();
+                    i.setAction(Intent.ACTION_SEND);
+                    i.putExtra(Intent.EXTRA_TEXT, "My child learned my number with the @KnowYourNumbers app!");
+                    i.setType("text/plain");
+                    Intent.createChooser(i, getResources().getText(R.string.share));
+                    startActivity(i);
+                    // TODO Add the app icon!
+                    // i.putExtra(Intent.EXTRA_SHORTCUT_ICON, null)
+                }
+            });
+
+            return view;
+        }
+    }
+
 }
